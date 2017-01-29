@@ -90,3 +90,5 @@ gawk -i inplace '
 	$2 == "/boot" { print $1, "/boot/firmware", $3, "ro,nofail," $4, "0", "0" }
 	' \
 	"$rootdir/etc/fstab"
+
+sed -E -i 's/\s+\<rpi3\>//' "$rootdir/etc/hosts"
