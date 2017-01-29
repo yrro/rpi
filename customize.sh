@@ -100,6 +100,53 @@ EOF
 chmod 0755 "$rootdir/etc/initramfs-tools/scripts/init-bottom/rpi3-hostname"
 rm "$rootdir/etc/hostname"
 
+# Mainline smsc95xx USB ethernet driver does not support the smsc95xx.macaddr
+# kernel parameter, so use networkd to change the MAC address based on the
+# value passed by the boot loader.
+cat > "$rootdir/etc/initramfs-tools/scripts/init-bottom/rpi3-macaddr" <<- EOF
+	#!/bin/sh
+
+	PREREQ='root-overlay'
+	prereqs()
+	{
+		echo "\$PREREQ"
+	}
+
+	case "\$1" in
+	prereqs)
+		prereqs
+		exit 0
+		;;
+	esac
+
+	. /scripts/functions
+
+	for arg in \$(cat /proc/cmdline); do
+		case "\$arg" in
+		smsc95xx.macaddr=*)
+			macaddr="\${arg#smsc95xx.macaddr=}"
+			;;
+		esac
+	done
+
+	if test -z "\$macaddr"; then
+		log_warning_msg 'Could not extract MAC address from /proc/cmdline'
+		exit 0
+	fi
+
+	cat > "\$rootmnt/etc/systemd/network/00-rpi3.link" <<- EOF2
+		[Match]
+		Driver=smsc95xx
+		Path=platform-3f980000.usb-usb-0:1.1:1.0
+
+		[Link]
+		MACAddress=\$macaddr
+	EOF2
+
+	exit 0
+EOF
+chmod 0755 "$rootdir/etc/initramfs-tools/scripts/init-bottom/rpi3-macaddr"
+
 mkdir -p "$rootdir/etc/initramfs/post-update.d"
 cat > "$rootdir/etc/initramfs/post-update.d/raspi3-firmware" <<- EOF
 	#!/bin/bash
