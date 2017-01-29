@@ -56,12 +56,6 @@ cat > "$rootdir/etc/initramfs-tools/scripts/init-bottom/root-overlay" <<- EOF
 		exit 0
 	fi
 
-	awk -- '
-		\$2 == "/" { print "none", "/", "none", "rw", "0", "0" }
-		\$2 != "/" { print \$0 }
-		' "\$rootmnt/etc/fstab" > "\$rootmnt/etc/fstab.tmp"
-	mv "\$rootmnt/etc/fstab.tmp" "\$rootmnt/etc/fstab"
-
 	if ! (mkdir -p "\$rootmnt/overlay" && mount -n -o rbind /overlay "\$rootmnt/overlay"); then
 		log_failure_msg 'Unable to make overlay tmpfs available within overlay filesystem'
 	fi
@@ -122,7 +116,7 @@ EOF
 chmod 0755 "$rootdir/etc/initramfs/post-update.d/raspi3-firmware"
 
 gawk -i inplace '
-	$2 == "/" { print $1, $2, $3, "ro," $4, "0", "0" }
+	$2 == "/" {}
 	$2 == "/boot" { print $1, "/boot/firmware", $3, "ro,nofail," $4, "0", "0" }
 	' \
 	"$rootdir/etc/fstab"
