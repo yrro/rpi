@@ -26,6 +26,8 @@ chmod 0755 "$rootdir/etc/initramfs-tools/hooks/root-overlay"
 cat > "$rootdir/etc/initramfs-tools/scripts/init-bottom/root-overlay" <<- EOF
 	#!/bin/sh
 
+	# Thanks: Michael Chesterton <https://github.com/chesty/overlayroot>
+
 	case "\$1" in
 	prereqs)
 		exit 0
@@ -69,6 +71,40 @@ cat > "$rootdir/etc/initramfs-tools/scripts/init-bottom/root-overlay" <<- EOF
 	exit 0
 EOF
 chmod 0755 "$rootdir/etc/initramfs-tools/scripts/init-bottom/root-overlay"
+
+cat > "$rootdir/etc/initramfs-tools/scripts/init-bottom/rpi3-hostname" <<- EOF
+	#!/bin/sh
+
+	PREREQ='root-overlay'
+	prereqs()
+	{
+		echo "\$PREREQ"
+	}
+
+	case "\$1" in
+	prereqs)
+		prereqs
+		exit 0
+		;;
+	esac
+
+	. /scripts/functions
+
+	serial="\$(cat /proc/device-tree/serial-number | tr '\0' '\n')"
+	if test -z "\$serial"; then
+		log_warning_msg 'Could not read serial number'
+		exit 0
+	fi
+
+	if ! printf 'rpi3-%s\n' "\$serial" > "\$rootmnt/etc/hostname"; then
+		log_warning_msg 'Could not write /etc/hostname to overlay filesystem'
+		exit 0
+	fi
+
+	exit 0
+EOF
+chmod 0755 "$rootdir/etc/initramfs-tools/scripts/init-bottom/rpi3-hostname"
+rm "$rootdir/etc/hostname"
 
 mkdir -p "$rootdir/etc/initramfs/post-update.d"
 cat > "$rootdir/etc/initramfs/post-update.d/raspi3-firmware" <<- EOF
