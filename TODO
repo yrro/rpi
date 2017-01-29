@@ -2,10 +2,6 @@ generate ssh keys on boot
 
 locales
 
-mcblk0p1 mounted at /boot not /boot/firmware
-
-remove fstab
-
 remove apt lists
 
 libpam-systemd
@@ -16,25 +12,9 @@ motd
 
 random seed
 
-fsck due to last mount in future
-
 sshd rootlogin, sudo, su, limits, etc
 
-systemd.unified_cgroup_hierarchy cgroup_enable=memory swapaccount=1 splash zswap.enabled=1
-
-logrotate
-cron
-mail
-
-read-only /
-
-disable journal?
-
 network pause
-
-machine id (can be specified on command line)
-hostname from /proc/device-tree/serial-number
-with initramfs boot script in local-bottom (or init-bottom, which is after?) directory using $rootmnt variable
 
 watchdog
 
@@ -42,11 +22,7 @@ reboot on panic
 
 fsck.mode=skip
 
-update-initramfs after customize only writes initramfs to /boot, does not copy to /boot/firmware
-
-prometheus
-
-igd
+prometheus node collectors
 
 cgroup.enable=memory swapaccount=1 systemd.unified_cgroup_hierarchy
 
