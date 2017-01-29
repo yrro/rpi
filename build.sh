@@ -33,5 +33,5 @@ vmdebootstrap \
 	--package vim-tiny \
 	--package htop \
 	--package prometheus-node-exporter \
-	--custom-package ../igd-exporter/prometheus-igd-exporter_0+gfeeb468_all.deb \
+	--custom-package ../igd-exporter/prometheus-igd-exporter_0+ga192588_all.deb \
 	--customize "$PWD/customize.sh"
