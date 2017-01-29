@@ -122,3 +122,5 @@ gawk -i inplace '
 	"$rootdir/etc/fstab"
 
 sed -E -i 's/\s+\<rpi3\>//' "$rootdir/etc/hosts"
+
+rm -f "$rootdir/etc/machine-id"
