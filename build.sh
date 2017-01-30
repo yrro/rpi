@@ -8,7 +8,7 @@ vmdebootstrap \
 	--arch arm64 \
 	--distribution stretch \
 	--mirror http://deb.debian.org/debian \
-	--debootstrapopts 'variant=minbase components=main,contrib,non-free' \
+	--debootstrapopts 'variant=minbase components=main,contrib,non-free merged-usr' \
 	--package raspi3-firmware \
 	--image rpi3.img \
 	--size 1024M \
