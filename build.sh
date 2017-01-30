@@ -26,6 +26,7 @@ vmdebootstrap \
 	--package init \
 	--package systemd-sysv \
 	--package libnss-resolve \
+	--package dbus \
 	--package openssh-server \
 	--package netbase \
 	--package less \
