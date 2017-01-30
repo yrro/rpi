@@ -55,9 +55,9 @@ cat > "$rootdir/etc/initramfs-tools/scripts/init-bottom/root-overlay" <<- EOF
 		exit 0
 	fi
 
-	if ! (mkdir -p "\$rootmnt/overlay" && mount -n -o rbind /overlay "\$rootmnt/overlay"); then
-		log_failure_msg 'Unable to make overlay tmpfs available within overlay filesystem'
-	fi
+	#if ! (mkdir -p "\$rootmnt/overlay" && mount -n -o rbind /overlay "\$rootmnt/overlay"); then
+	#	log_failure_msg 'Unable to make overlay tmpfs available within overlay filesystem'
+	#fi
 
 	log_warning_msg '/etc/fstab not (yet) fixed up... problem?'
 
