@@ -13,7 +13,6 @@ image="$2"
 # apt clean is already run for us by vmdebootstrap
 rm -vf "$rootdir/var/lib/apt/lists/{*_Index,*_Release,*_InRelease,*_Packages,*_Translation-*,*.gpg,*.gz,*.lz4}"
 
-#echo overlay >> "$rootdir/etc/initramfs-tools/modules"
 cat > "$rootdir/etc/initramfs-tools/hooks/root-overlay" <<- EOF
 	#!/bin/bash
 
