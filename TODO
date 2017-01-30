@@ -6,8 +6,6 @@ remove apt lists
 
 libpam-systemd
 
-test with no nss_myhostname
-
 motd
 
 random seed
