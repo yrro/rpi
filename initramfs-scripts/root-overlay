@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# Thanks: Michael Chesterton <https://github.com/chesty/overlayroot>
+
+case "$1" in
+prereqs)
+    exit 0
+    ;;
+esac
+
+. /scripts/functions
+
+if ! (mkdir /overlay && mount -t tmpfs none /overlay); then
+    log_failure_msg 'Unable to prepare /overlay tmpfs'
+    exit 0
+fi
+for d in upper work lower; do
+    if ! mkdir "/overlay/$d"; then
+        log_failure_msg 'Unable to create /overlay tmpfs subdirs'
+        exit 0
+    fi
+done
+
+if ! mount -n -o move "$rootmnt" /overlay/lower; then
+    log_failure_msg 'Unable to move root fs mount to overlay filesystem'
+    exit 0
+fi
+if ! mount -t overlay none -olowerdir=/overlay/lower,upperdir=/overlay/upper,workdir=/overlay/work "$rootmnt"; then
+    log_failure_msg 'Unable to create overlay filesystem'
+    exit 0
+fi
+
+#if ! (mkdir -p "$rootmnt/overlay" && mount -n -o rbind /overlay "$rootmnt/overlay"); then
+#    log_failure_msg 'Unable to make overlay tmpfs available within overlay filesystem'
+#fi
+
+log_warning_msg '/etc/fstab not (yet) fixed up... problem?'
+
+exit 0

@@ -1,0 +1,30 @@
+#!/bin/sh
+
+PREREQ='root-overlay'
+prereqs()
+{
+    echo "$PREREQ"
+}
+
+case "$1" in
+prereqs)
+    prereqs
+    exit 0
+    ;;
+esac
+
+. /scripts/functions
+
+serial="$(tr '\0' '\n' < /proc/device-tree/serial-number)"
+if test -z "$serial"; then
+    log_warning_msg 'Could not read serial number'
+    exit 0
+fi
+
+if ! printf 'rpi3-%s\n' "$serial" > "$rootmnt/etc/hostname"; then
+    log_warning_msg 'Could not write /etc/hostname to overlay filesystem'
+    exit 0
+fi
+
+exit 0
+

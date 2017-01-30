@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -eu
+
+VER="$1"
+INITRAMFS="$2"
+
+if ! mountpoint -q /boot/firmware; then
+    echo 'Warning: /boot/firmware is not mounted; firmware will boot using the old initramfs' >&2
+    exit 0
+fi
+
+install -m 0644 -t /boot/firmware "$INITRAMFS"

@@ -2,8 +2,6 @@ generate ssh keys on boot
 
 locales
 
-remove apt lists
-
 libpam-systemd
 
 motd
