@@ -36,4 +36,6 @@ vmdebootstrap \
 	--package prometheus-node-exporter \
 	--package rng-tools5 \
 	--custom-package ../igd-exporter/prometheus-igd-exporter_0+ga192588_all.deb \
+	--custom-package tinc_1.1~pre14-16-g15b868e-1_arm64.deb \
+	--custom-package libreadline6_6.3-9_arm64.deb \
 	--customize "$PWD/customize.sh"

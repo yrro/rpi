@@ -1,0 +1,5 @@
+[Match]
+Name=robots
+
+[Network]
+LLMNR=true
