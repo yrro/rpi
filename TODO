@@ -23,3 +23,5 @@ prometheus node collectors
 cgroup.enable=memory swapaccount=1 systemd.unified_cgroup_hierarchy
 
 squashfs support for vmdebootstrap - use contents of /boot/firmware as directory contents
+
+tinc
