@@ -6,8 +6,6 @@ libpam-systemd
 
 motd
 
-random seed
-
 sshd rootlogin, sudo, su, limits, etc
 
 network pause
