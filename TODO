@@ -12,8 +12,6 @@ sshd rootlogin, sudo, su, limits, etc
 
 network pause
 
-watchdog
-
 reboot on panic
 
 fsck.mode=skip

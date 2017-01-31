@@ -31,6 +31,8 @@ install -m 0755 -D -t "$rootdir/usr/local/lib/rpi3" macaddr.sh
 # Copy generated initramfs to boot partition
 install -m 0755 -D -t "$rootdir/etc/initramfs/post-update.d" raspi3-firmware
 
+install -m 0644 -D -t "$rootdir/etc/systemd/system.conf.d/" watchdog.conf
+
 # Remove unused entry for root filesystem and mount boot filesystem readonly
 gawk -i inplace '
 	$2 == "/" {}
