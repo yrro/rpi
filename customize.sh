@@ -22,6 +22,11 @@ rm -f "$rootdir/etc/hostname"
 sed -E -i 's/\s+\<rpi3\>//' "$rootdir/etc/hosts" # Resolution of hostname will be performed by nss-resolve(8)
 install -m 0755 -t "$rootdir/etc/initramfs-tools/scripts/init-bottom" initramfs-scripts/rpi3-hostname
 
+# Set up machine-id here to avoid triggering systemd empty_etc logic, that
+# activates presets, resulting in weirdness like ssh.socket being enabled
+rm -f "$rootdir/etc/machine-id"
+install -m 0755 -t "$rootdir/etc/initramfs-tools/scripts/init-bottom" initramfs-scripts/rpi3-machine-id
+
 # Mainline smsc95xx USB ethernet driver does not support the smsc95xx.macaddr
 # kernel parameter, so use udev to change the MAC address based on the value
 # passed by the boot loader.
@@ -43,6 +48,3 @@ gawk -i inplace '
 	$2 == "/boot" { print $1, "/boot/firmware", $3, "ro,nofail," $4, "0", "0" }
 	' \
 	"$rootdir/etc/fstab"
-
-# systemd will generate this for us
-rm -f "$rootdir/etc/machine-id"
