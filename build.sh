@@ -37,6 +37,7 @@ vmdebootstrap \
 	--package vim-tiny \
 	--package htop \
 	--package prometheus-node-exporter \
+	--package prometheus-blackbox-exporter \
 	--package rng-tools5 \
 	--custom-package ../igd-exporter/prometheus-igd-exporter_0+ga192588_all.deb \
 	--custom-package tinc_1.1~pre14-16-g15b868e-1_arm64.deb \

@@ -61,3 +61,6 @@ gawk -i inplace '
 
 # Why isn't this the default?
 chroot "$rootdir" systemctl enable prometheus-node-exporter.service
+
+install -m 0644 -t "$rootdir/etc/prometheus" blackbox.yml
+install -m 0644 -D -t "$rootdir/etc/systemd/system/prometheus-blackbox-exporter.service.d" allow-ping.conf
