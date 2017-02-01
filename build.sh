@@ -2,6 +2,9 @@
 
 set -eu
 
+# Get rid of annoying warnings from perl during package configuration
+export LC_ALL=C.UTF-8
+
 rm -f debootstrap.log vmdebootstrap.log
 
 vmdebootstrap \
