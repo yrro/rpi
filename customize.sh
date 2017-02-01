@@ -15,7 +15,7 @@ rm -f "$rootdir/var/lib/apt/lists/"*_*
 
 # Use overlay mount for root filesystem
 install -m 0755 -t "$rootdir/etc/initramfs-tools/hooks" initramfs-hooks/root-overlay
-install -m 0755 -t "$rootdir/etc/initramfs-tools/scripts/init-bottom" initramfs-scripts/root-overlay
+install -m 0755 -t "$rootdir/etc/initramfs-tools/scripts/local-bottom" initramfs-scripts/root-overlay
 
 # Generate hostname from serial number
 rm -f "$rootdir/etc/hostname"
