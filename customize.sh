@@ -25,6 +25,7 @@ install -m 0755 -t "$rootdir/etc/initramfs-tools/scripts/init-bottom" initramfs-
 # Set up machine-id here to avoid triggering systemd empty_etc logic, that
 # activates presets, resulting in weirdness like ssh.socket being enabled
 rm -f "$rootdir/etc/machine-id"
+rm -f "$rootdir/var/lib/dbus/machine-id"
 install -m 0755 -t "$rootdir/etc/initramfs-tools/scripts/init-bottom" initramfs-scripts/rpi3-machine-id
 
 # Mainline smsc95xx USB ethernet driver does not support the smsc95xx.macaddr
