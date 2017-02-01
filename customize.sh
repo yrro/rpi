@@ -54,10 +54,10 @@ install -m 0644 -t "$rootdir/etc" machine-info
 
 # Remove unused entry for root filesystem and mount boot filesystem readonly
 gawk -i inplace '
-	$2 == "/" {}
-	$2 == "/boot" { print $1, "/boot/firmware", $3, "ro,nofail," $4, "0", "0" }
-	' \
-	"$rootdir/etc/fstab"
+    $2 == "/" {}
+    $2 == "/boot" { print $1, "/boot/firmware", $3, "ro,nofail," $4, "0", "0" }
+    ' \
+    "$rootdir/etc/fstab"
 
 # Why isn't this the default?
 chroot "$rootdir" systemctl enable prometheus-node-exporter.service
