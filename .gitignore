@@ -1,4 +1,5 @@
 /vmdebootstrap.log
 /*.deb
 /tinc.tar
+/ssh.tar
 /rpi3.img

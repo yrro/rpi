@@ -39,9 +39,16 @@ install -m 0755 -D -t "$rootdir/etc/initramfs/post-update.d" raspi3-firmware
 
 install -m 0644 -D -t "$rootdir/etc/systemd/system.conf.d" watchdog.conf
 
-tar -x -f tinc.tar -C "$rootdir/etc/tinc"
-install -m 0644 -t "$rootdir/etc/systemd/network" robots.network
-chroot "$rootdir" systemctl enable tinc@robots.service
+if [[ -f ssh.tar ]]; then
+    rm -f "$rootdir/etc/ssh/"ssh_host_*_key{,.pub}
+    tar -x -f ssh.tar -C "$rootdir/etc/ssh"
+fi
+
+if [[ -f tinc.tar ]]; then
+    tar -x -f tinc.tar -C "$rootdir/etc/tinc"
+    install -m 0644 -t "$rootdir/etc/systemd/network" robots.network
+    chroot "$rootdir" systemctl enable tinc@robots.service
+fi
 
 install -m 0644 -t "$rootdir/etc" machine-info
 
