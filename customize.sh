@@ -42,6 +42,8 @@ tar -x -f tinc.tar -C "$rootdir/etc/tinc"
 install -m 0644 -t "$rootdir/etc/systemd/network" robots.network
 chroot "$rootdir" systemctl enable tinc@robots.service
 
+install -m 0644 -t "$rootdir/etc" machine-info
+
 # Remove unused entry for root filesystem and mount boot filesystem readonly
 gawk -i inplace '
 	$2 == "/" {}
