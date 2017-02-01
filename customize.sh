@@ -36,7 +36,7 @@ install -m 0755 -D -t "$rootdir/usr/local/lib/rpi3" macaddr.sh
 # Copy generated initramfs to boot partition
 install -m 0755 -D -t "$rootdir/etc/initramfs/post-update.d" raspi3-firmware
 
-install -m 0644 -D -t "$rootdir/etc/systemd/system.conf.d/" watchdog.conf
+install -m 0644 -D -t "$rootdir/etc/systemd/system.conf.d" watchdog.conf
 
 tar -x -f tinc.tar -C "$rootdir/etc/tinc"
 install -m 0644 -t "$rootdir/etc/systemd/network" robots.network
