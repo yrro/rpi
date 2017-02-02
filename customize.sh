@@ -52,6 +52,8 @@ fi
 
 install -m 0644 -t "$rootdir/etc" machine-info
 
+install -m 0644 -t "$rootdir/etc/default" default/locale
+
 # Remove unused entry for root filesystem and mount boot filesystem readonly
 gawk -i inplace '
     $2 == "/" {}

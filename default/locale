@@ -1,0 +1,4 @@
+# ssh commonly sends the client's LANG and LC_* environment variables which
+# will point to locales that are not available in this image. Override these
+# variables by setting LC_ALL.
+LC_ALL=C.UTF-8
