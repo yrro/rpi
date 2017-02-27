@@ -19,7 +19,7 @@ install -m 0755 -t "$rootdir/etc/initramfs-tools/scripts/local-bottom" initramfs
 
 # Generate hostname from serial number
 rm -f "$rootdir/etc/hostname"
-sed -E -i 's/\s+\<rpi3\>//' "$rootdir/etc/hosts" # Resolution of hostname will be performed by nss-resolve(8)
+sed -E -i -e 's/\s+\<rpi3\>//' "$rootdir/etc/hosts" # Resolution of hostname will be performed by nss-resolve(8)
 install -m 0755 -t "$rootdir/etc/initramfs-tools/scripts/init-bottom" initramfs-scripts/rpi3-hostname
 
 # Set up machine-id here to avoid triggering systemd empty_etc logic, that
@@ -36,6 +36,9 @@ install -m 0755 -D -t "$rootdir/usr/local/lib/rpi3" macaddr.sh
 
 # Copy generated initramfs to boot partition
 install -m 0755 -D -t "$rootdir/etc/initramfs/post-update.d" raspi3-firmware
+
+install -m 0644 -D -t "$rootdir/etc/systemd/system.conf.d" accounting.conf
+sed -i -e 's/^console=.*/\0 cgroup_enable=memory swapaccount=1/' "$rootdir/etc/kernel/postinst.d/raspi3-firmware"
 
 install -m 0644 -D -t "$rootdir/etc/systemd/system.conf.d" watchdog.conf
 
